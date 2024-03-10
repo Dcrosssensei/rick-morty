@@ -64,11 +64,6 @@ function Slide() {
         <h1 className=" w-full px-1 text-xl font-semibold break-all	py-4">Ryck and Morty List</h1>
         <SearchSlide onChange={recoverText} onIconClick={hanldeMenu} /> 
       </div>
-      <div className="flex gap-4">
-        <h5 className="text-[#2563EB]">acount:  </h5>
-        <h5 className=" bg-[#95dd7ae3] text-[#3B8520] rounded-full px-5">1 filter</h5>
-      </div>
-        <Divider />
         <List />
     </div>
     </>

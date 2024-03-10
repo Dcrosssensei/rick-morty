@@ -5,6 +5,7 @@ import { Character } from '../../models/character';
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import { addCharacters } from "../../redux/charactersSlide";
+import { Outlet } from "react-router-dom";
 
 const Home = () =>{
 
@@ -46,7 +47,7 @@ const Home = () =>{
     <div className="flex h-full w-full">
         <Slide />
         <div className=" w-2/3 relative ">
-            Home
+        <Outlet />
         </div>
     </div>
   )
