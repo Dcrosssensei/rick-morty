@@ -33,9 +33,11 @@ function Slide() {
     const genderFilter = useRef<string | null>(null);
     const statusFilter = useRef<string | null>(null);
     const sortFilter = useRef<string | null>(null);
+    const [searchText, setSearchText] = useState<string | null>(null)
 
-    function recoverText (e:string){
-        console.log('e', e)
+
+    function recoverText (text:string){
+      text !== "" ? setSearchText(text) : setSearchText(null)
     }
 
     const hanldeMenu= ()=>{
@@ -127,7 +129,7 @@ function Slide() {
         <h1 className=" w-full px-1 text-xl font-semibold break-all	py-4">Ryck and Morty List</h1>
         <SearchSlide onChange={recoverText} onIconClick={hanldeMenu} /> 
       </div>
-        <List filters={filterProps} resetHandler={resetHandler} onChangeReset={setResetHandler}/>
+        <List filters={filterProps} resetHandler={resetHandler} onChangeReset={setResetHandler} searchText={searchText}/>
     </div>
     </>
 

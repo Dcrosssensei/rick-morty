@@ -13,21 +13,26 @@ interface propList {
     filters: filterHandler,
     resetHandler: boolean;
     onChangeReset: (value: boolean) => void;
-
+    searchText: string | null
 }
 
-const List = ({filters, resetHandler, onChangeReset }:propList) => {
+const List = ({filters, resetHandler, onChangeReset, searchText }:propList) => {
     const {gender,sort,status}= filters;
+    console.log('serachText', searchText)
 
     const dispatch = useAppDispatch()
     const charactersRedux = useAppSelector((state) => state.characters.characters)
     const favoritesRedux = useAppSelector((state) => state.favorites.favorite)
     const navigation = useNavigate();
 
-    const [showFilters, setShowFilters] = useState(false)
-    const [countFilter, setCountFilter] = useState<number>(0)
+    
     const [myFavorites, setMyFavorites] = useState<Character[]>([])
     const [characterList, setCharacterList] = useState<Character[]>([]);
+    
+    const [showFilters, setShowFilters] = useState(false)
+    const [countFilter, setCountFilter] = useState<number>(0)
+    const [myFavoritesFilter, setMyFavoritesFilter] = useState<Character[]>([])
+    const [characterListFilter, setCharacterListFilter] = useState<Character[]>([]);
 
     useEffect(() => {
         console.log('charactersRedux')
@@ -37,14 +42,26 @@ const List = ({filters, resetHandler, onChangeReset }:propList) => {
     }, [charactersRedux])
 
     useEffect(() => {
-        console.log('filters');
-        
-        if ( gender || sort || status ) {
-            let newFavs =myFavorites;
-            let newList =characterList;
+        console.log('searchText');
+        if (searchText) {
+            console.log(searchText);
+            const original = [...charactersRedux];
+            const filteredText = original.filter(objeto => objeto.name.toLowerCase().includes(searchText.toLowerCase()));
+            const withoutFavorites = filteredText.filter((character) => {
+                return !favoritesRedux.some((favorite) => favorite.id === character.id);
+              });
+            setCharacterList(withoutFavorites)
+        } else softRest()
+    }, [searchText])
 
+    useEffect(() => {
+        console.log('filters');
+        let newFavs =myFavorites;
+        let newList =characterList;
+        let fConunter= 0;
+
+        if ( gender || sort || status) {
             setShowFilters(true)
-            let fConunter= 0;
             if (gender){
                 fConunter++
                 newFavs = newFavs.filter(element => element.gender == gender)
@@ -55,27 +72,35 @@ const List = ({filters, resetHandler, onChangeReset }:propList) => {
                 newFavs = newFavs.filter(element => element.status == status)
                 newList = newList.filter(element => element.status == status)
             } 
-            setMyFavorites(newFavs)
-            setCharacterList(newList)
+            setMyFavoritesFilter(newFavs)
+            setCharacterListFilter(newList)
             setCountFilter(fConunter);
         }
+
     }, [gender,sort,status])
-    
+
     useEffect(() => {
         console.log('reset');
-        
-       if (resetHandler) {
+       if (resetHandler) resetOperation()
+    }, [resetHandler])
+    
+   
+    
+    const resetOperation=()=>{
+        softRest()
+        setShowFilters(false)
+        onChangeReset(false)
+    }
+    
+    const softRest =()=>{
         setMyFavorites(favoritesRedux)
         const withoutFavorites = charactersRedux.filter((character) => {
             return !favoritesRedux.some((favorite) => favorite.id === character.id);
           });
         setCharacterList(withoutFavorites)
-        setShowFilters(false)
-        onChangeReset(false)
-       }
-    }, [resetHandler])
-    
+    }
 
+   
 
     const changeFavorite = (status: statusCard) => {
         const { prevStatus, character } = status;
@@ -85,6 +110,7 @@ const List = ({filters, resetHandler, onChangeReset }:propList) => {
             const tempList =[...characterList, character];
             setCharacterList(tempList)
             dispatch(changeFav(false))
+            dispatch(reduxFavorite(newFavs))
 
         } else {
             const newList = characterList.filter(element => element.id !== character.id)
@@ -99,6 +125,7 @@ const List = ({filters, resetHandler, onChangeReset }:propList) => {
     const seletedCard = (status: statusCard) => {
         const {character, prevStatus} = status;
         dispatch(selected({ character: character, fav: prevStatus}))
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         navigation(`${character.id}`)
     };
 
@@ -107,15 +134,28 @@ const List = ({filters, resetHandler, onChangeReset }:propList) => {
             {
                 showFilters
                 ? <div className="flex justify-between items-center px-4 ">
-                    <h5 className="text-[#2563EB] text-xl font-semibold">Results: {characterList.length} </h5>
+                    <h5 className="text-[#2563EB] text-xl font-semibold">Results: {characterListFilter.length} </h5>
                     <h5 className=" bg-[#95dd7ae3] text-[#3B8520] rounded-full px-5 text-xl md:text-xl"> {countFilter} filter</h5>
                   </div>
                 :null
             }
-            <div className="p-2 ">
-                <h1>My Favorites</h1>
+            <div>
+                <h1 className="p-2" >My Favorites</h1>
                 {
-                    myFavorites.map((element, index) => {
+                    showFilters
+                    ? myFavoritesFilter.map((element, index) => {
+                        return (
+                            <Card 
+                                key={index} 
+                                character={element} 
+                                handleFavorite={changeFavorite} 
+                                favoriteProp={true} 
+                                handleSelected={seletedCard}
+                                />
+                        )
+                    })
+                        
+                    : myFavorites.map((element, index) => {
                         return (
                             <Card 
                                 key={index} 
@@ -129,10 +169,22 @@ const List = ({filters, resetHandler, onChangeReset }:propList) => {
                 }
             </div>
             <Divider />
-            <h1>Characters</h1>
-            <div className="">
-                {
-                    characterList.map((element, index) => {
+            <h1 className="p-2">Characters</h1>
+            <div >
+                {showFilters
+                ?   characterListFilter.map((element, index) => {
+                    return (
+                        <LazyLoad key={index} height={200} offset={100}>
+                            <Card 
+                                character={element} 
+                                handleFavorite={changeFavorite} 
+                                favoriteProp={false} 
+                                handleSelected={seletedCard}
+                            />
+                        </LazyLoad>
+                    )
+                })
+                :   characterList.map((element, index) => {
                         return (
                             <LazyLoad key={index} height={200} offset={100}>
                                 <Card 
