@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { ButtonStyleActive, ButtonStyleinactive } from "../styles/buttonStyle";
+import { stateFilter } from "./Slide";
 
 interface ButtonsProps {
-    onSort: (sort: string) => void;
+    onSort: (state: stateFilter) => void;
 }
 
 const ButtonsSort = ({ onSort }: ButtonsProps) => {
@@ -16,14 +17,14 @@ const ButtonsSort = ({ onSort }: ButtonsProps) => {
         <div>
             <button className={activeBnt === sortOptions.ASC ?ButtonStyleActive :  ButtonStyleinactive}
                 onClick={() => { 
-                    onSort(sortOptions.ASC) 
+                    onSort({status:sortOptions.ASC, origin:'sort'}) 
                     setActiveBnt(sortOptions.ASC)
                 }}>
                 Sort A-Z
             </button>
             <button className={activeBnt === sortOptions.DEC ?ButtonStyleActive :  ButtonStyleinactive}
              onClick={() => { 
-                onSort(sortOptions.DEC ) 
+                onSort({status:sortOptions.DEC, origin:'sort'} ) 
                 setActiveBnt(sortOptions.DEC )
             }}>
                 Sort Z-A

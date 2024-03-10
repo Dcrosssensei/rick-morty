@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import selectedSlice from './selectedSlide';
 import charactersSlice  from './charactersSlide';
+import  favoriteSlice from './favoritesSlide';
 
 export const store = configureStore({
   reducer: {
     selected: selectedSlice,
-    characters: charactersSlice
+    characters: charactersSlice,
+    favorites:favoriteSlice
   },
 })
 

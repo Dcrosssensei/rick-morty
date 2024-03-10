@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { genderOptions } from "../../../models/character";
 import { ButtonStyleActive, ButtonStyleinactive } from "../styles/buttonStyle";
+import { stateFilter } from "./Slide";
 
   interface ButtonsProps {
-    onGender:(sort:string)=> void;
+    onGender:(state:stateFilter)=> void;
   }
 
   
@@ -18,22 +19,22 @@ import { ButtonStyleActive, ButtonStyleinactive } from "../styles/buttonStyle";
         <div>
           <button className={activeBnt === female ?ButtonStyleActive :  ButtonStyleinactive}
           onClick={()=> {
-            onGender(female)
+            onGender({status: female, origin:'gender'})
             setActiveBnt(female)
             }}>{female}</button>
           <button className={activeBnt === male ?ButtonStyleActive :  ButtonStyleinactive}
           onClick={()=> {
-            onGender(male)
+            onGender({status:male, origin:'gender'})
             setActiveBnt(male)
             }}>{male}</button>
           <button className={activeBnt === genderless ?ButtonStyleActive :  ButtonStyleinactive}
           onClick={()=> {
-            onGender(genderless)
+            onGender({status:genderless, origin:'gender'})
             setActiveBnt(genderless)
             }}>{genderless}</button>
           <button className={activeBnt === unknown ?ButtonStyleActive :  ButtonStyleinactive}
           onClick={()=> {
-            onGender(unknown)
+            onGender({status:unknown, origin:'gender'})
             setActiveBnt(unknown)
             }}>{unknown}</button>
         </div>
