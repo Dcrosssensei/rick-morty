@@ -19,3 +19,19 @@ export interface Origin {
     image: string;
   }
   
+  export const statusOptions = {
+    alive: 'Alive',
+    dead: 'Dead',
+    unknown: 'unknown'
+  }
+
+  export const genderOptions = {
+    female: 'Female',
+    male: 'Male',
+    genderless: 'Genderless',
+    unknown: 'unknown'
+  }
+
+
+
+ export const LOCAL_STORAGE = 'characters'
