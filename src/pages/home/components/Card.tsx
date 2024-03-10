@@ -2,27 +2,27 @@
 import { HeartIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HearOutline } from '@heroicons/react/24/outline'
 import { Character } from '../../../models/character';
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
+
+export interface statusCard {
+  prevStatus: boolean,
+  id: number
+  character: Character
+}
 
 interface cardProps {
   character:Character,
-  handleFavorite: (status:boolean)=> void
+  handleFavorite: (status: statusCard)=> void
+  favoriteProp: boolean,
+  idChat:number
 }
 
-export const Card = ({character, handleFavorite}:cardProps) => {
-  const {id} = character;
-  const reduxList= ["1"]
+export const Card = ({character, handleFavorite, favoriteProp, idChat}:cardProps) => {
 
-  const [favorite, setFavorite] = useState(false);
-  useEffect(() => {
-    if (reduxList.includes(id)) setFavorite(true)
-    else setFavorite(false);
-  
-  }, [id, reduxList])
-  
   const handleClickFavorite = () => {
-    favorite ?  handleFavorite(true) : handleFavorite(false);
-    setFavorite(!favorite)
+    favoriteProp 
+      ?  handleFavorite({prevStatus: true, id: idChat, character}) 
+      : handleFavorite({prevStatus: false, id: idChat, character});
 };
 
   return (
@@ -44,7 +44,7 @@ export const Card = ({character, handleFavorite}:cardProps) => {
               onClick={handleClickFavorite}
             >
               {
-                favorite
+                favoriteProp
                 ? <HeartIcon className="w-7 h-7 text-green-500" />
                 : <HearOutline className="w-7 h-7 text-green-500" />
               }

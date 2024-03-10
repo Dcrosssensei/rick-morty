@@ -1,17 +1,22 @@
+import { AdjustmentsVerticalIcon } from "@heroicons/react/24/solid"
 import SearchInput, { SearchInputProps } from "../../../components/SearchInput"
 
 interface SearchslideProps extends SearchInputProps {
     buttonState?: string
+    onIconClick?: () => void;
 }
 
-export const SearchSlide = ({onChange, placeHolder, buttonState}: SearchslideProps) => {
+export const SearchSlide = ({onChange, placeHolder, onIconClick}: SearchslideProps) => {
   return (
-    <div className="w-full bg-red-500">
+    <div className="flex w-full bg-white items-center">
         <SearchInput 
             onChange={onChange}
             placeHolder={placeHolder}
         /> 
-        {buttonState}
+        <AdjustmentsVerticalIcon 
+          className="w-7 h-7 cursor-pointer text-gray-600 hover:text-violet-900 hover:cursor-pointer" 
+          onClick={onIconClick} 
+        />
     </div>
   )
 }

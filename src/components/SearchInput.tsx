@@ -16,7 +16,7 @@ function SearchInput({ onChange, placeHolder="" }: SearchInputProps) {
     return (
         <>
             <input
-                className=" px-3 py-2 rounded-md focus:outline-none "
+                className="w-full px-3 py-2 rounded-md focus:outline-none "
                 placeholder={placeHolder}
                 value={inputValue}
                 onChange={handleChange}
