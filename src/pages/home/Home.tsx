@@ -3,7 +3,9 @@ import Slide from "./components/Slide";
 import { buildBigQuery } from '../../services/graphql/chractersQuery';
 import { Character } from '../../models/character';
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "../../hooks/reduxHooks";
+import { useAppDispatch, 
+    useAppSelector 
+} from "../../hooks/reduxHooks";
 import { addCharacters } from "../../redux/charactersSlide";
 import { Outlet } from "react-router-dom";
 
@@ -14,6 +16,28 @@ const Home = () =>{
     const bigQuery= gql`${query}`
     const [getCharacters, result] = useLazyQuery(gql`query ${bigQuery}`)
     const dispatch = useAppDispatch();
+    const selected = useAppSelector((state) => state.selected.selected)
+
+    const [windowSize, setWindowSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    
+      useEffect(() => {
+        const handleResize = () => {
+          setWindowSize({
+            width: window.innerWidth,
+            height: window.innerHeight
+          });
+        };
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []);
+      
 
     useEffect(() => {
         if (process) {
@@ -45,8 +69,12 @@ const Home = () =>{
 
   return (
     <div className="flex h-full w-full">
-        <Slide />
-        <div className=" w-2/3 relative ">
+        {   
+            windowSize.width < 641 && selected.character
+            ? null
+            : <Slide />
+        }
+        <div className="  md:w-2/3 w-full relative ">
         <Outlet />
         </div>
     </div>
