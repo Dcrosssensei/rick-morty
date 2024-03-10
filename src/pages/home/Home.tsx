@@ -43,7 +43,6 @@ const Home = () =>{
         if (process) {
             let dataMapped:Character[]=[];
             const {data} = result;
-            console.log('data', data)
             for (const page in data){
                 dataMapped= dataMapped.concat(data[page].results)
             }

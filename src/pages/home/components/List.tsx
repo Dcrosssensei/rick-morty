@@ -18,7 +18,6 @@ interface propList {
 
 const List = ({filters, resetHandler, onChangeReset, searchText }:propList) => {
     const {gender,sort,status}= filters;
-    console.log('serachText', searchText)
 
     const dispatch = useAppDispatch()
     const charactersRedux = useAppSelector((state) => state.characters.characters)
@@ -35,16 +34,13 @@ const List = ({filters, resetHandler, onChangeReset, searchText }:propList) => {
     const [characterListFilter, setCharacterListFilter] = useState<Character[]>([]);
 
     useEffect(() => {
-        console.log('charactersRedux')
         if (charactersRedux && characterList.length <1) {
             setCharacterList(charactersRedux)
         }
     }, [charactersRedux])
 
     useEffect(() => {
-        console.log('searchText');
         if (searchText) {
-            console.log(searchText);
             const original = [...charactersRedux];
             const filteredText = original.filter(objeto => objeto.name.toLowerCase().includes(searchText.toLowerCase()));
             const withoutFavorites = filteredText.filter((character) => {
@@ -55,7 +51,6 @@ const List = ({filters, resetHandler, onChangeReset, searchText }:propList) => {
     }, [searchText])
 
     useEffect(() => {
-        console.log('filters');
         let newFavs =myFavorites;
         let newList =characterList;
         let fConunter= 0;
@@ -80,7 +75,6 @@ const List = ({filters, resetHandler, onChangeReset, searchText }:propList) => {
     }, [gender,sort,status])
 
     useEffect(() => {
-        console.log('reset');
        if (resetHandler) resetOperation()
     }, [resetHandler])
     
