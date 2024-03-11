@@ -6,7 +6,7 @@ jest.mock('react', () => ({
     ...jest.requireActual('react'),
     useState: jest.fn(),
   }));
-  
+
 const mockOnGender =(state:stateFilter)=> {state};
 
 describe('ButtonsGender component', () => {
@@ -23,13 +23,11 @@ describe('ButtonsGender component', () => {
   test('calls onGender handler correctly when clicking buttons', () => {
     render(ButtonsGender({onGender: ()=>{}}) );
 
-    // Simulamos hacer clic en los botones
     fireEvent.click(screen.getByText(/female/i));
     fireEvent.click(screen.getByText(/male/i));
     fireEvent.click(screen.getByText(/genderless/i));
     fireEvent.click(screen.getByText(/unknown/i));
 
-    // Verificamos que la función onGender haya sido llamada con los argumentos correctos
     expect(mockOnGender).toHaveBeenCalledTimes(4);
     expect(mockOnGender).toHaveBeenCalledWith({ status: 'Female', origin: 'gender' });
     expect(mockOnGender).toHaveBeenCalledWith({ status: 'Male', origin: 'gender' });
