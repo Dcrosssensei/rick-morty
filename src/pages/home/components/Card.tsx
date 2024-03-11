@@ -8,7 +8,7 @@ export interface statusCard {
   character: Character
 }
 
-interface cardProps {
+export interface cardProps {
   character:Character,
   handleFavorite: (status: statusCard)=> void
   handleSelected: (status: statusCard)=> void
