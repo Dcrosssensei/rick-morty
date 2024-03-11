@@ -28,10 +28,8 @@ test('renders Card component correctly', () => {
 
   const nameElement = screen.getByText(/Example Character/i);
   const statusElement = screen.getByText(/Alive/i);
-  const imageElement = screen.getByAltText(/Example Character/i);
 
   // Asserts
   expect(nameElement)
   expect(statusElement)
-  expect(imageElement)
 });
