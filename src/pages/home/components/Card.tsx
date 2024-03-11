@@ -2,7 +2,6 @@
 import { HeartIcon } from '@heroicons/react/24/solid'
 import { HeartIcon as HearOutline } from '@heroicons/react/24/outline'
 import { Character } from '../../../models/character';
-// import { useEffect, useState } from 'react';
 
 export interface statusCard {
   prevStatus: boolean,
@@ -16,7 +15,7 @@ interface cardProps {
   favoriteProp: boolean,
 }
 
-export const Card = ({character, handleFavorite, handleSelected, favoriteProp}:cardProps) => {
+const Card = ({character, handleFavorite, handleSelected, favoriteProp}:cardProps) => {
 
   const handleClickFavorite = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation();
@@ -62,6 +61,4 @@ export const Card = ({character, handleFavorite, handleSelected, favoriteProp}:c
   )
 }
 
-
-// card
-    // -color react if is active in destok
+export default Card

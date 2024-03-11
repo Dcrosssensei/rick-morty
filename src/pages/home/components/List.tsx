@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import Divider from "../../../components/Divider";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { changeFav, selected } from "../../../redux/selectedSlide";
-import { Card, statusCard } from "./Card";
 import LazyLoad from 'react-lazyload';
 import { Character } from "../../../models/character";
 import { useNavigate } from "react-router";
 import { filterHandler } from "./Slide";
 import { reduxFavorite } from "../../../redux/favoritesSlide";
 import { sortOptions } from "./ButtonsSort";
+import Card, { statusCard } from "./Card";
 
 interface propList {
     filters: filterHandler,
@@ -152,7 +152,7 @@ const List = ({filters, resetHandler, onChangeReset, searchText }:propList) => {
                     showFilters
                     ? myFavoritesFilter.map((element, index) => {
                         return (
-                            <Card 
+                            <Card
                                 key={index} 
                                 character={element} 
                                 handleFavorite={changeFavorite} 
