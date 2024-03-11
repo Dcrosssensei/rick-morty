@@ -1,3 +1,4 @@
 # Rick and Morty
-1- yarn
-2- yarn vite
+Instalation 
+1. yarn
+2. yarn vite
