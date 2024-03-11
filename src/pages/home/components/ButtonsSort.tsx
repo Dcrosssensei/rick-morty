@@ -6,11 +6,12 @@ interface ButtonsProps {
     onSort: (state: stateFilter) => void;
 }
 
+export const sortOptions= {
+    ASC: 'ASC',
+    DEC: 'DEC'
+}
+
 const ButtonsSort = ({ onSort }: ButtonsProps) => {
-    const sortOptions= {
-        ASC: 'ASC',
-        DEC: 'DEC'
-    }
     const [activeBnt, setActiveBnt] = useState('')
 
     return (

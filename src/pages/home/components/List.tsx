@@ -8,6 +8,7 @@ import { Character } from "../../../models/character";
 import { useNavigate } from "react-router";
 import { filterHandler } from "./Slide";
 import { reduxFavorite } from "../../../redux/favoritesSlide";
+import { sortOptions } from "./ButtonsSort";
 
 interface propList {
     filters: filterHandler,
@@ -41,12 +42,12 @@ const List = ({filters, resetHandler, onChangeReset, searchText }:propList) => {
 
     useEffect(() => {
         if (searchText) {
-            const original = [...charactersRedux];
+            const original = showFilters? [...characterListFilter] : [...charactersRedux];
             const filteredText = original.filter(objeto => objeto.name.toLowerCase().includes(searchText.toLowerCase()));
             const withoutFavorites = filteredText.filter((character) => {
                 return !favoritesRedux.some((favorite) => favorite.id === character.id);
               });
-            setCharacterList(withoutFavorites)
+              showFilters ? setCharacterListFilter(withoutFavorites) : setCharacterList(withoutFavorites)
         } else softRest()
     }, [searchText])
 
@@ -67,6 +68,17 @@ const List = ({filters, resetHandler, onChangeReset, searchText }:propList) => {
                 newFavs = newFavs.filter(element => element.status == status)
                 newList = newList.filter(element => element.status == status)
             } 
+            if (sort) {
+                if (sort === sortOptions.ASC) {
+                    newFavs = newFavs.slice().sort((a, b) => a.name.localeCompare(b.name))
+                    newList = newList.slice().sort((a, b) => a.name.localeCompare(b.name))
+                }
+                if (sort === sortOptions.DEC) {
+                    newFavs = newFavs.slice().sort((a, b) => b.name.localeCompare(a.name))
+                    newList = newList.slice().sort((a, b) => b.name.localeCompare(a.name))
+
+                }
+            } 
             setMyFavoritesFilter(newFavs)
             setCharacterListFilter(newList)
             setCountFilter(fConunter);
@@ -86,12 +98,13 @@ const List = ({filters, resetHandler, onChangeReset, searchText }:propList) => {
         onChangeReset(false)
     }
     
-    const softRest =()=>{
+    const softRest =()=>{        
         setMyFavorites(favoritesRedux)
-        const withoutFavorites = charactersRedux.filter((character) => {
+        const tempList = showFilters ? [...characterListFilter] : [...charactersRedux]
+        const withoutFavorites = tempList.filter((character) => {
             return !favoritesRedux.some((favorite) => favorite.id === character.id);
           });
-        setCharacterList(withoutFavorites)
+          showFilters ? setCharacterListFilter(withoutFavorites) :setCharacterList(withoutFavorites)
     }
 
    
