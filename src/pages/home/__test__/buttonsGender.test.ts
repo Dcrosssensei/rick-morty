@@ -1,18 +1,14 @@
 import { render, fireEvent, screen } from '@testing-library/react';
 import ButtonsGender from '../components/ButtonsGender';
 import { stateFilter } from '../components/Slide';
-
-jest.mock('react', () => ({
-    ...jest.requireActual('react'),
-    useState: jest.fn(),
-  }));
+import React from 'react';
 
 const mockOnGender =(state:stateFilter)=> {state};
 
 describe('ButtonsGender component', () => {
   test('renders ButtonsGender component correctly', () => {
     render(ButtonsGender({onGender: ()=>{}}) );
-    
+    React.useState = jest.fn().mockReturnValue(['', {}])
     // Verificamos que los botones estén presentes
     expect(screen.getByText(/female/i)).toBeTruthy();
     expect(screen.getByText(/male/i)).toBeTruthy();
