@@ -91,31 +91,34 @@ function Slide() {
   return (
     <>
     {showMenu
-      ?<PopMenu>
-      <section className="p-3">
-        <h1>FILTERS</h1>
-      <Divider />
+      ?
         <div>
-          <h3>Sort</h3>
-          <div className="flex">
-            <ButtonsSort onSort={handlerFilters} />
-          </div>
-        </div>
-        <Divider />
-        <div>
-          <h3>Status</h3>
-          <ButtonsStatus  onStatus={handlerFilters}/>
-        </div>
-        <Divider />
-        <div>
-          <h3>Gender</h3>
-          <ButtonsGender  onGender={handlerFilters}/>
-        </div>
-        <Divider />
-        <button className={ButtonStyleActive} onClick={filters}> Filter </button>
-        <button className={ButtonStyleinactive} onClick={resetFilters}> Reset </button>
-      </section>
-    </PopMenu>
+          <PopMenu>
+          <section className="p-3">
+            <h1>FILTERS</h1>
+          <Divider />
+            <div>
+              <h3>Sort</h3>
+              <div className="flex">
+                <ButtonsSort onSort={handlerFilters} />
+              </div>
+            </div>
+            <Divider />
+            <div>
+              <h3>Status</h3>
+              <ButtonsStatus  onStatus={handlerFilters}/>
+            </div>
+            <Divider />
+            <div>
+              <h3>Gender</h3>
+              <ButtonsGender  onGender={handlerFilters}/>
+            </div>
+            <Divider />
+            <button className={ButtonStyleActive} onClick={filters}> Filter </button>
+            <button className={ButtonStyleinactive} onClick={resetFilters}> Reset </button>
+          </section>
+        </PopMenu>
+      </div>
       :<></>
     }
 

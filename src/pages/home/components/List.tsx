@@ -100,11 +100,11 @@ const List = ({filters, resetHandler, onChangeReset, searchText }:propList) => {
     
     const softRest =()=>{        
         setMyFavorites(favoritesRedux)
-        const tempList = showFilters ? [...characterListFilter] : [...charactersRedux]
+        const tempList = [...charactersRedux]
         const withoutFavorites = tempList.filter((character) => {
             return !favoritesRedux.some((favorite) => favorite.id === character.id);
           });
-          showFilters ? setCharacterListFilter(withoutFavorites) :setCharacterList(withoutFavorites)
+        setCharacterList(withoutFavorites)
     }
 
    

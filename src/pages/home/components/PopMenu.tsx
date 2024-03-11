@@ -7,8 +7,8 @@ interface PopMenuProps {
 const PopMenu = ({children}:PopMenuProps) => {
   return (
     <div className='
-    absolute z-50 bg-white h-full w-full border border-gray-300 rounded-3xl 
-    sm:top-28 sm:w-1/3 sm:h-fit
+    fixed z-50 bg-white h-screen w-screen border border-gray-300 rounded-3xl 
+    sm:top-28 sm:w-1/3 sm:h-fit sm:absolute
     '>
         {children}
     </div>
